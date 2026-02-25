@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ titulo }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+<body class="container">
+    <header>
+        <h1>👨‍🏫 {{ titulo }}</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Nueva Observación</h2>
+            <form action="/guardar" method="POST">
+                <label>Estudiante:</label>
+                <select name="estudiante_id" required>
+                    <option value="">Seleccione un alumno...</option>
+                    {% for est in estudiantes %}
+                        <option value="{{ est.id }}">{{ est.nombre }}</option>
+                    {% endfor %}
+                </select>
+
+                <label>Categoría:</label>
+                <select name="categoria">
+                    <option value="Lógica">Lógica</option>
+                    <option value="Sintaxis">Sintaxis</option>
+                    <option value="Participación">Participación</option>
+                </select>
+
+                <label>Comentario:</label>
+                <textarea name="comentario" required placeholder="Escribe aquí..."></textarea>
+
+                <label>Tipo:</label>
+                <select name="tipo_feedback">
+                    <option value="positivo">Positivo ✅</option>
+                    <option value="a_mejorar">A mejorar ⚠️</option>
+                </select>
+
+                <button type="submit">Guardar Feedback</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Historial</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Categoría</th>
+                        <th>Comentario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in feedbacks %}
+                    <tr>
+                        <td><strong>{{ f.estudiantes.nombre }}</strong></td>
+                        <td>{{ f.categoria }}</td>
+                        <td>{{ f.comentario }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>
